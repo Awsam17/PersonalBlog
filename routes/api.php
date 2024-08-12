@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PostController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -15,4 +16,11 @@ Route::group(['prefix' => 'auth'],function (){
     Route::post('/verify',[AuthController::class,'verify'])->name('verify');
 });
 Route::post('/logout',[AuthController::class,'logout'])->middleware('auth:api')->name('logout');
+
+Route::group(['prefix'=>'post','name'=>'post','middleware'=>'auth:api'],function(){
+    Route::post('create',[PostController::class,'create'])->name('create');
+    Route::get('show',[PostController::class,'show'])->name('show');
+    Route::post('edit',[PostController::class,'edit'])->name('edit');
+    Route::delete('delete',[PostController::class,'delete'])->name('delete');
+});
 
